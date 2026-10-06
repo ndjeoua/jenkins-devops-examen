@@ -29,6 +29,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
+                    docker compose -p jenkins-test up -d --build movie_db cast_db
+                    until docker compose -p jenkins-test exec -T movie_db pg_isready -h 127.0.0.1 && docker compose -p jenkins-test exec -T cast_db pg_isready -h 127.0.0.1; do sleep 2; done
                     docker compose -p jenkins-test up -d --build
                     for i in $(seq 1 30); do curl -sf http://localhost:8080/api/v1/casts/docs > /dev/null && break; sleep 2; done
                     curl -sf -X POST http://localhost:8080/api/v1/casts/ -H "Content-Type: application/json" -d '{"name": "Test", "nationality": "FR"}'
