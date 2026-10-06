@@ -1,0 +1,15 @@
+fullnameOverride: cast-db
+image:
+  repository: postgres
+  tag: "12.1-alpine"
+service:
+  type: ClusterIP
+  port: 5432
+  targetPort: 5432
+env:
+  - name: POSTGRES_USER
+    value: cast_db_username
+  - name: POSTGRES_PASSWORD
+    value: cast_db_password
+  - name: POSTGRES_DB
+    value: cast_db_dev

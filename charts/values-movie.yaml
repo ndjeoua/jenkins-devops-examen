@@ -1,0 +1,10 @@
+fullnameOverride: movie-service
+image:
+  repository: raoulndjeoua/jenkins-exam-movie
+command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+env:
+  - name: DATABASE_URI
+    value: postgresql://movie_db_username:movie_db_password@movie-db/movie_db_dev
+  - name: CAST_SERVICE_HOST_URL
+    value: http://cast-service/api/v1/casts/
+probePath: /api/v1/movies/docs
